@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="refresh" content="3" />
+  <meta name="theme-color" content="#073d70" />
+  <title>BlueTrace | 수중 쓰레기 밀집도 예측</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar"><div class="brand-mark">≈</div><div><strong>BlueTrace</strong><span>CSV 기반 수중 쓰레기 분석</span></div></header>
+    <section class="map-area" aria-label="부산 항구 수중 쓰레기 밀집도 지도">
+      <div id="map"></div><div class="map-title"><small>AI 분석 · CSV 관측값만 사용</small><b>수중 쓰레기 밀집도</b></div>
+      <div class="legend"><span>낮음</span><i></i><span>높음</span></div>
+    </section>
+    <section class="bottom-sheet selected" id="sheet" aria-live="polite">
+      <button class="sheet-grabber" id="sheetGrabber" type="button" aria-label="분석 결과 창을 위아래로 움직이기"><span class="drag-handle"></span></button>
+      <div class="eyebrow">선택한 항구</div>
+      <div class="area-heading"><h1 id="areaName">부산항</h1><span>최근 2일 관측값</span></div>
+      <div class="risk-card"><div class="risk-ring" id="riskRing"><span id="riskScore">--</span><small>%</small></div><div><small>수중 쓰레기 밀집 가능성</small><b id="riskLabel">분석 중</b><p id="riskSummary"></p></div></div>
+      <section class="data-section"><div class="section-title"><h2>CSV 데이터 분석</h2><span id="timeRange"></span></div><div class="metrics" id="metrics"></div></section>
+      <section class="data-section result-section"><div class="section-title"><h2>AI 분석 결과</h2><span>유속 · 유향 기반</span></div><p id="analysisText"></p></section>
+      <p class="data-note">외부 사이트·파도·조석·지형 데이터는 사용하지 않았습니다. 이 결과는 부유 쓰레기가 아닌 수중 쓰레기 밀집 가능성 예측입니다.</p>
+    </section>
+  </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="./app.js"></script>
+</body>
+</html>
