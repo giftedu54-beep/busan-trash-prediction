@@ -1,0 +1,2 @@
+/* 지도 제목(수중 쓰레기 밀집도) 바로 아래에 색상 범례를 배치합니다. */
+.map-title + .legend{top:70px;bottom:auto;left:18px;background:#ffffffeb;color:#38536f;text-shadow:none;border-radius:10px;padding:7px 9px;box-shadow:0 2px 8px #183e6333}.map-title + .legend i{width:94px}
