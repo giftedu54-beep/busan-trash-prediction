@@ -59,6 +59,8 @@
 
   tab.addEventListener('click', event => {
     event.stopImmediatePropagation();
+    document.querySelectorAll('.app-page').forEach(item => item.classList.toggle('active', item === page));
+    document.querySelectorAll('.tab').forEach(item => item.classList.toggle('active', item === tab));
     home();
     start().catch(() => {});
   }, true);
