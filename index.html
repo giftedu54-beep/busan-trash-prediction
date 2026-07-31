@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a68c8">
+  <title>Seapoint</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./sheet-modes.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar"><img class="brand-logo" src="./seapoint-logo.png" alt="Seapoint logo"><div><strong>Seapoint</strong><span id="brandSubtitle"></span></div></header>
+    <section class="map-area" aria-label="Seapoint map"><div id="map"></div><div class="map-title"><small id="mapSource"></small><b id="mapHeading"></b></div><div class="legend"><span id="legendLow"></span><i></i><span id="legendHigh"></span></div></section>
+    <section class="bottom-sheet" id="sheet" aria-live="polite">
+      <button class="sheet-grabber" id="sheetGrabber" type="button" aria-label="Move result panel"><span class="drag-handle"></span></button>
+      <div class="eyebrow" id="selectedLabel"></div>
+      <div class="area-heading"><h1 id="areaName"></h1><span id="observationLabel"></span></div>
+      <div class="risk-card"><div class="risk-ring" id="riskRing"><span id="riskScore">--</span><small>%</small></div><div><small id="densityLabel"></small><b id="riskLabel"></b><p id="riskSummary"></p></div></div>
+      <section class="data-section"><div class="section-title"><h2 id="csvTitle"></h2><span id="timeRange"></span></div><div class="metrics" id="metrics"></div></section>
+      <section class="data-section result-section"><div class="section-title"><h2 id="analysisTitle"></h2><span id="analysisBasis"></span></div><p id="analysisText"></p></section>
+      <section class="cleaning-section"><div class="section-title"><h2 id="cleaningTitle"></h2><span id="recordStatus"></span></div><button class="clean-button" id="cleanButton" type="button"></button><ul class="cleaning-list" id="cleaningList"></ul></section>
+      <p class="data-note" id="dataNote"></p>
+    </section>
+  </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="./app.js"></script>
+</body>
+</html>
