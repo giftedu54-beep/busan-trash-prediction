@@ -8,12 +8,26 @@
 
   function list(type) {
     const items = posts.filter(post => post.type === type);
-    return items.length ? items.map(post => `<button class="community-row" data-post="${post.id}"><b>${esc(post.title)}</b><small>${esc(post.user_id)} · ${date(post.created_at)}</small></button>`).join('') : '<p>등록된 글이 없습니다.</p>';
+    return items.length ? items.map(post => `<button class="community-row" data-post="${post.id}" style="display:block;width:100%;margin:8px 0;padding:14px;text-align:left;background:#fff;border:1px solid #d9e1e8;border-radius:10px"><b>${esc(post.title)}</b><p style="margin:7px 0;color:#586b7b">${esc(post.content)}</p><small>${esc(post.user_id)} · ${date(post.created_at)}</small></button>`).join('') : '<p>등록된 글이 없습니다.</p>';
   }
 
   function home() {
     page.innerHTML = `<h2>커뮤니티</h2><section><h3>게시글</h3>${list('post')}</section><section><h3>청소 모집 방</h3>${list('recruit')}</section><button id="communityNew" type="button">새 글 쓰기</button>`;
     page.querySelector('#communityNew').onclick = form;
+    page.querySelectorAll('[data-post]').forEach(button => button.onclick = () => detail(button.dataset.post));
+  }
+
+  async function detail(id) {
+    const post = posts.find(item => item.id === id);
+    const auth = await window.firebaseAuth();
+    const user = auth.auth.currentUser?.email.replace('@seapoint.local', '');
+    const fire = await import('https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js');
+    const db = fire.getFirestore(auth.auth.app);
+    const comments = await fire.getDocs(fire.query(fire.collection(db, 'community_posts', id, 'comments'), fire.orderBy('created_at', 'asc')));
+    page.innerHTML = `<button id="communityBack" type="button">←</button><article style="padding:14px;background:#fff;border:1px solid #d9e1e8;border-radius:10px"><h2>${esc(post.title)}</h2><small>${esc(post.user_id)} · ${date(post.created_at)}</small><p>${esc(post.content)}</p>${post.user_id === user ? '<button id="deletePost">삭제</button>' : ''}<hr>${comments.docs.map(item => `<p><b>${esc(item.data().user_id)}</b> ${esc(item.data().content)}</p>`).join('')}<input id="commentText" placeholder="댓글"><button id="addComment">댓글 등록</button></article>`;
+    page.querySelector('#communityBack').onclick = home;
+    page.querySelector('#deletePost')?.addEventListener('click', async () => { await fire.deleteDoc(fire.doc(db, 'community_posts', id)); home(); });
+    page.querySelector('#addComment').onclick = async () => { const content = page.querySelector('#commentText').value.trim(); if (user && content) await fire.addDoc(fire.collection(db, 'community_posts', id, 'comments'), {user_id:user, content, created_at:new Date().toISOString()}); detail(id); };
   }
 
   function form() {
