@@ -1,6 +1,7 @@
 // Firebase Firestore: 청소 기록을 모든 사용자가 공유하도록 저장합니다.
 const FIREBASE_CONFIG = { apiKey:'AIzaSyCcXemuqF8YlTSQp7Ji84zLgiF4FkYpbws', authDomain:'seapoint-1e1b4.firebaseapp.com', projectId:'seapoint-1e1b4', storageBucket:'seapoint-1e1b4.firebasestorage.app', messagingSenderId:'831819852376', appId:'1:831819852376:web:e72ca9d6682f1c2135b82d' };
 let firestoreDb=null, firestoreApi=null, unsubscribeCleaningRecords=null;
+document.querySelector('#sheet').classList.add('is-hidden');
 async function initializeFirestore(){try{const [{initializeApp},{getFirestore,collection,addDoc,query,where,orderBy,limit,getDocs}]=await Promise.all([import('https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js'),import('https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js')]);firestoreDb=getFirestore(initializeApp(FIREBASE_CONFIG));firestoreApi={collection,addDoc,query,where,orderBy,limit,getDocs};}catch(error){console.warn('Firebase 연결 실패:',error);}}
 const LOCAL_KEY = 'seapoint-cleaning-records';
 const ko = {
