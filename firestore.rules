@@ -7,6 +7,16 @@ service cloud.firestore {
       allow update: if request.auth != null
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members']);
       allow delete: if false;
+
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if request.auth != null
+          && request.resource.data.keys().hasOnly(['user_id', 'content', 'created_at'])
+          && request.resource.data.user_id is string
+          && request.resource.data.content is string
+          && request.resource.data.created_at is string;
+        allow update, delete: if false;
+      }
     }
     match /ports/{portId}/cleaning_records/{recordId} {
       allow read: if true;
