@@ -6,7 +6,8 @@ service cloud.firestore {
       allow create: if request.auth != null;
       allow update: if request.auth != null
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members']);
-      allow delete: if false;
+      allow delete: if request.auth != null
+        && request.auth.token.email == resource.data.user_id + '@seapoint.local';
 
       match /comments/{commentId} {
         allow read: if true;
