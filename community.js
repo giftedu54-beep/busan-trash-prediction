@@ -59,6 +59,7 @@
 
   tab.addEventListener('click', event => {
     event.stopImmediatePropagation();
-    start().then(home);
+    home();
+    start().catch(() => {});
   }, true);
 })();
