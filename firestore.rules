@@ -3,7 +3,8 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /ports/{portId}/cleaning_records/{recordId} {
       allow read: if true;
-      allow create: if request.resource.data.keys().hasOnly(['port_id', 'user_id', 'completed_at'])
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['port_id', 'user_id', 'completed_at'])
         && request.resource.data.port_id == portId
         && request.resource.data.user_id is string
         && request.resource.data.completed_at is string;
